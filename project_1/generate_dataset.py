@@ -13,3 +13,5 @@ def generate_data_set_b(n):
     return list(result)
 
 
+if __name__ == "__main__":
+    pass
