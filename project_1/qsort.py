@@ -1,4 +1,4 @@
-import generate_dataset
+
 
 
 def get_pivot_value(array,l,r):
@@ -31,24 +31,7 @@ def quick_sort(left,right, array):
     return array
 
 
-def verify(array):
-
-    for i in range(len(array) -1):
-        if array[i] <= array[i+1]:
-            i+=1
-        else:
-            print('Not sorted')
-            print(array[i],array[i+1])
-
-            return
-
-if __name__ == "__main__":
-    for N in [1000,10000,50000,100000,500000]:
-    #for N in [21]:
-        array = quick_sort(0, N-1,generate_dataset.generate_data_set_b(N))
-        print("Verifying array of size " ,N )
-        verify(array)
-
-
+if __name__ == '__main__':
+    pass
 
 
