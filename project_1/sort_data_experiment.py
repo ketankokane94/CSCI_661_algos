@@ -21,12 +21,17 @@ def run(N):
 
 
 if __name__ == "__main__":
+    print('Input Length'.ljust(20),'CPU Time'.ljust(20),end='\t')
+    print()
     for N in [1000,10000,50000,100000,500000]:
         recorded_time = []
         for executions in range(19):
             sorted_array, time_required = run(N)
             recorded_time.append(time_required)
-        print(N, numpy.mean(numpy.array(recorded_time)))
+
+        mean_ = numpy.mean(numpy.array(recorded_time))
+        print(str(N).ljust(20), str(mean_).ljust(20),end='\t')
+        print()
 
 
         #print("Verifying array of size " ,N )
