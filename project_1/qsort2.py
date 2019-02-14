@@ -1,16 +1,6 @@
 import generate_dataset
 
 def find_min(unsorted_list,from_index=1):
-    """
-    This function returns a minimum element in a list from given index also
-    notes the number of comparisons made during finding the min element
-    :param unsorted_list:
-    :param from_index:
-    :param comparisons:
-    :return:
-    """
-    # assign initial min value to the maximum possible number in this
-    # scenario anything more than 100000 is fine
     min = 99999999
     min_element_index = 0
     # iterate from given index upto the length of list
@@ -46,7 +36,6 @@ def get_pivot_value(array,l,r):
 
 
 def partition(array, left, right):
-    #pivot = get_pivot_value(array,left,right)
     pivot_value = array[left]
     left_marker = left
     right_marker = right
