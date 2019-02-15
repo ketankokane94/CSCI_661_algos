@@ -38,17 +38,5 @@ def verify(array):
     print('success')
 
 
-
 if __name__ == '__main__':
     pass
-
-
-'''
-quick sort algorithm for dataset B
-Input Length         CPU Time            	
-1000                 0.0033557916942395663	
-10000                0.0572687073757774  	
-50000                0.468938852611341   	
-100000               1.3424009774860584  	
-500000               11.633198775743184 
-'''

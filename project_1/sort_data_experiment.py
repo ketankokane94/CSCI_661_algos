@@ -45,5 +45,8 @@ if __name__ == "__main__":
 
     execute_run('quick sort', 'A', generate_dataset.generate_data_set_a, sort1)
     execute_run('quick sort', 'B', generate_dataset.generate_data_set_b, sort1)
-    execute_run('quick sort', 'A', generate_dataset.generate_data_set_a, sort2)
-    execute_run('quick sort', 'B', generate_dataset.generate_data_set_b, sort2)
+    execute_run('modified quick sort', 'A',
+                generate_dataset.generate_data_set_a,
+                sort2)
+    execute_run('modified quick sort', 'B',
+                generate_dataset.generate_data_set_b, sort2)

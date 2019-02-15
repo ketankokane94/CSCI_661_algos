@@ -1,12 +1,8 @@
 
 
 
-def get_pivot_value(array,l,r):
-    return l
-
 
 def partition(array, left, right):
-    #pivot = get_pivot_value(array,left,right)
     pivot_value = array[left]
     left_marker = left
     right_marker = right
