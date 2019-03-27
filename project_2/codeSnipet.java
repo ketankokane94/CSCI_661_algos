@@ -1,3 +1,4 @@
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -37,20 +38,22 @@ class HuffmanNode implements Comparable{
 
 class CreateHuffmanTree{
 
-    public HuffmanNode createTree(Map<K,V> <Character,Integer> frequency){
+    public HuffmanNode createTree(Map<Character,Integer> frequency){
 
     PriorityQueue<HuffmanNode> queue  = new PriorityQueue<>();
-    
+    HuffmanNode temp ;
     for (char var : frequency.keySet()) {
-        queue.add(new HuffmanNode(frequency.get(var), var));
+        temp = new HuffmanNode(frequency.get(var), var);
+        temp.isLeafNode = True; 
+        queue.add(temp);
     }
     // while atleast 2 elemens in the queue
     while(queue.size() > 1){
         HuffmanNode leftChild = queue.remove();
-        leftChild.isLeafNode = true;
+        //leftChild.isLeafNode = true;
 
         HuffmanNode rightChild = queue.remove();
-        rightChild.isLeafNode = true;
+        //rightChild.isLeafNode = true;
 
         HuffmanNode parentChild = new HuffmanNode(leftChild.frequency + rightChild.frequency );
         parentChild.left = leftChild;
@@ -64,5 +67,25 @@ class CreateHuffmanTree{
 }
 class Encode{
     File InputFile; 
-    File Ou;
+    File OutputFile;
+//HuffmanNode rootNode;
+Map <Character,Integer> frequency = new HashMap<>();
+
+InputStream is ;
+int input;
+while ((input = is.read())!= -1) {
+    char c = (char) input;
+    if (frequency.containsKey(c)){
+        // update the count value
+    }
+    else{
+        frequency.put(c, 1);
+    }
+    
+}
+
+if (input == -1){
+// manage pseudo EOF
+}
+
 }
