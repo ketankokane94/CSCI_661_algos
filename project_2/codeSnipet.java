@@ -89,3 +89,7 @@ if (input == -1){
 }
 
 }
+
+for (int i = 0; i < bit.length(); i++) {
+    System.out.println("Sum of x+y = " + bit.get(i) );
+}
