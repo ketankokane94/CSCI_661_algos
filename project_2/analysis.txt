@@ -1,0 +1,67 @@
+Write a program that constructs Huffman code for a given English text and encode it.
+ And write a program for decoding an English text that has been encoded with Huffman code. 
+ Experiment with your encoding and decoding programs for 50 different texts,
+  each text having a minimum of 50 words and at least one page in length. 
+  What range of compression ratios do you get? 
+  Can you improve the compression ratios by using some estimates of frequencies instead of actual frequencies? 
+  You are encouraged to look into published literature for ideas to improve the compression ratio.
+
+Programming Language and Data Structure: Your choice. 
+Please mention your choices and provide a justification in the summary report.
+Java : because provides implementation of priority queue
+    : can convert every seen character to unicode, to avoid having to deal with encoding, and won't be missinh out on any 
+    character.
+    support for multiple file stream readers 
+    BitInputStream and BitOutputStream
+
+
+modules
+1.read file 
+2.construct Huffman codes 
+3.Encode text using generated huffman codes
+4.calculate the compression ratio =  original / encoded {that means minimum compression ration is 1}
+5.decode the file using encoded file only
+
+1.read file :  file_path 
+
+sub modules : 
+calculate the frequencies of the characters of the file O(n) hashmap / dictionary 
+
+how to handle various characters (convert every character to something which is very understandable)
+should return a dictionary of frequency 
+
+2. construct huffman code  : input frequencies of characters freq
+get minimum element n times every time pick takes O(n) time, so used heap, adding to heap O(nlogn)
+heapify takes O(n)
+
+create a priority queue from the freq {what needs to be done to set the required prioties in priority queue comparator ?}
+
+what object would be added in the priority queue
+frequency
+
+pick two smallest element from the PQ:
+combine them and create a new freq node 
+(by combining the frequencies, no need to store the character name here) and add it back to the PQ:
+(assign 0 to the left child and 1 to the right child) 
+continue above step until only one node is remaining in the PQ
+return the single node, this is the root node of the huffman tree generated
+
+Structure frequency {
+    int frequency ; 
+    what is the character;
+    left child , right child;
+    is leaf node --> can be used to optimise traversal
+}
+
+
+after reading the file add a pseudo eof in the PQ:
+while encoding when -1 is found use pseduo code inplace
+3.Encode text using generated huffman codes : code table for every character seen in the file 
+how to encode the file so that it can be decoded
+
+
+HuffmanNode {
+    
+}
+
+
