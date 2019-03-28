@@ -8,15 +8,16 @@ Write a program that constructs Huffman code for a given English text and encode
 
 Programming Language and Data Structure: Your choice. 
 Please mention your choices and provide a justification in the summary report.
-Java : because provides implementation of priority queue
-    : can convert every seen character to unicode, to avoid having to deal with encoding, and won't be missinh out on any 
+Java : because provides implementation of priority queue {used by implementing comparator method}
+    : can convert every seen character to unicode, to avoid having to deal with encoding, and won't be missing out on any 
     character.
-    support for multiple file stream readers 
+    support for multiple file stream readers Used InputStream = BufferedInputStream
     BitInputStream and BitOutputStream
 
+read a byte write a byte
 
 modules
-1.read file 
+1.read file done
 2.construct Huffman codes 
 3.Encode text using generated huffman codes
 4.calculate the compression ratio =  original / encoded {that means minimum compression ration is 1}
@@ -65,3 +66,14 @@ HuffmanNode {
 }
 
 
+
+
+problem: 
+ how to figure out the codes from the tree 
+ binary tree 
+
+ postOrder traversal 
+ every time you see a leaf node print the code generated so far
+
+ Map should be character and what ? bitset ?
+ 

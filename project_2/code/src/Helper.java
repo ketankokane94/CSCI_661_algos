@@ -3,8 +3,8 @@ import java.util.PriorityQueue;
 
 public class Helper {
 
-    public static  HuffmanNode makeHuffManTree(Map<Integer,Integer>  frequency){
-        PriorityQueue<HuffmanNode> queue  = new PriorityQueue<>();
+    public static HuffmanNode makeHuffManTree(Map<Integer, Integer> frequency) {
+        PriorityQueue<HuffmanNode> queue = new PriorityQueue<>();
 
         HuffmanNode temp;
         // create forest
@@ -14,14 +14,14 @@ public class Helper {
             queue.add(temp);
         }
         // while atleast 2 elemens in the queue
-        while(queue.size() > 1){
+        while (queue.size() > 1) {
             HuffmanNode leftChild = queue.remove();
             //leftChild.isLeafNode = true;
 
             HuffmanNode rightChild = queue.remove();
             //rightChild.isLeafNode = true;
 
-            HuffmanNode parentChild = new HuffmanNode(leftChild.frequency + rightChild.frequency );
+            HuffmanNode parentChild = new HuffmanNode(leftChild.frequency + rightChild.frequency);
             parentChild.left = leftChild;
             parentChild.right = rightChild;
 

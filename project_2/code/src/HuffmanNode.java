@@ -9,7 +9,7 @@ class HuffmanNode implements Comparable<HuffmanNode> {
     public boolean isLeafNode;
 
     public HuffmanNode(int frequency) {
-        this(frequency, ' ');
+        this(frequency, '@');
     }
 
     public HuffmanNode(int frequency, char character) {
