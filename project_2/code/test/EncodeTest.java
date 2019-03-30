@@ -21,7 +21,16 @@ class EncodeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void setCodeMap() {
+    void setCodeMap() throws IOException {
+        File inputFile = new File(new File("").getCanonicalPath() + "/test.txt");
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
+        Encode encode = new Encode();
+        final Map<Integer, Integer> characterFrequencyOfFile = encode.getCharacterFrequencyOfFile(inputStream);
+        HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
+        encode.setCodeMap(rootNode);
+        assertFalse(encode.codeMap.isEmpty());
+        assertTrue(encode.codeMap.size() > 6);
+        assertTrue(encode.codeMap.containsKey('b'));
     }
 
     @org.junit.jupiter.api.Test
