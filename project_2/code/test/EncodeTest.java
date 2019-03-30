@@ -14,17 +14,17 @@ class EncodeTest {
 
     @org.junit.jupiter.api.Test
     void createCompressedFile() throws IOException {
-        File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
+        File output = new File(new File("").getCanonicalPath() +  "/test.txt");
         OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
         Encode e = new Encode();
 
         File inputFile = new File(new File("").getCanonicalPath() + "/test.txt");
         InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
-        final Map<Integer, Integer> characterFrequencyOfFile = new Encode().getCharacterFrequencyOfFile(inputStream);
+        final Map<Integer, Integer> characterFrequencyOfFile = new Encode().getCharacterFrequencyOfFile("test.txt");
         Helper.makeHuffManTree(characterFrequencyOfFile);
         e.setCodeMap(Helper.makeHuffManTree(characterFrequencyOfFile));
         inputStream = new BufferedInputStream(new FileInputStream(inputFile));
-        e.createCompressedFile(inputStream,"");
+        e.createCompressedFile("test.txt","");
     }
 
     @org.junit.jupiter.api.Test
@@ -51,7 +51,7 @@ class EncodeTest {
         File inputFile = new File(new File("").getCanonicalPath() + "/test.txt");
         InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
         Encode encode = new Encode();
-        final Map<Integer, Integer> characterFrequencyOfFile = encode.getCharacterFrequencyOfFile(inputStream);
+        final Map<Integer, Integer> characterFrequencyOfFile = encode.getCharacterFrequencyOfFile("encode.txt");
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         encode.setCodeMap(rootNode);
         assertFalse(encode.codeMap.isEmpty());
@@ -63,7 +63,7 @@ class EncodeTest {
     void getCharacterFrequencyOfFile() throws IOException {
         File inputFile = new File(new File("").getCanonicalPath() + "/test.txt");
         InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
-        final Map<Integer, Integer> characterFrequencyOfFile = new Encode().getCharacterFrequencyOfFile(inputStream);
+        final Map<Integer, Integer> characterFrequencyOfFile = new Encode().getCharacterFrequencyOfFile("encode.txt");
         assertNotNull(characterFrequencyOfFile);
         assertTrue(characterFrequencyOfFile.size() > 6);
     }

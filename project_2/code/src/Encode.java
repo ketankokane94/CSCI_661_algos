@@ -17,23 +17,38 @@ public class Encode {
 
     /**
      *
-     * @param input
+     * @param inputFileName
      * @param outputFileName
      * @throws IOException
      */
 
-    public void encodeFile(InputStream input, String outputFileName) throws IOException {
-        Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(input);
+    public void encodeFile(String inputFileName , String outputFileName) throws IOException {
+
+        Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(inputFileName);
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
-        createCompressedFile(input,outputFileName);
+        createCompressedFile(inputFileName,outputFileName);
         System.out.println(codeMap.toString());
     }
 
-    //TODO: make private
-    public void createCompressedFile(@NotNull InputStream input, String outputFileName) throws IOException {
+    private InputStream getInputStream(String fileName) throws IOException {
+        File inputFile = new File(new File("").getCanonicalPath() + "/analysis.txt");
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
+        return inputStream;
+    }
+
+    private OutputStream getOuputStream(String fileName) throws IOException {
         File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
         OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
+        return outputStream;
+    }
+
+
+    //TODO: make private
+    public void createCompressedFile(@NotNull String inputFileName, String outputFileName) throws IOException {
+        InputStream input = getInputStream(inputFileName);
+        OutputStream outputStream = getOuputStream(outputFileName);
+
         int inputChar;
         int EOFFound = 0;
         StringBuilder stringBuilder = new StringBuilder();
@@ -93,7 +108,7 @@ public class Encode {
     public void setCodeMap(HuffmanNode rootNode) {
         postOrderTraversal(rootNode, "");
     }
-    //TODO: make publi
+    //TODO: make public
     private void postOrderTraversal(@NotNull HuffmanNode node, String code) {
         if (node.isLeafNode) {
             codeMap.put(node.character, code);
@@ -104,12 +119,13 @@ public class Encode {
     }
 
     /**
-     * @param input
+     * @param inputFileName
      * @return
      * @throws IOException
      */
     //TODO: make private
-    public Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull InputStream input) throws IOException {
+    public Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull String inputFileName) throws IOException {
+        InputStream input = getInputStream(inputFileName);
         Map<Integer, Integer> frequencies = new HashMap<>();
 
         int inputChar;
@@ -132,7 +148,6 @@ public class Encode {
                 max = temp;
             }
         }
-
         input.close();
         frequencies.put(max, 1);
         return frequencies;
