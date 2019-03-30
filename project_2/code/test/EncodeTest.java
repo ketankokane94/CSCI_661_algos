@@ -17,7 +17,22 @@ class EncodeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void psuhTheBitsToFile() {
+    void pushTheBitsToFile() throws IOException {
+     String input = "0111010100001110101010100101010";
+        File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
+        OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
+        Encode e = new Encode();
+        e.pushTheBitsToFile(input,outputStream);
+    }
+    @org.junit.jupiter.api.Test
+    void pushTheBitsToFileWithOverFlow() throws IOException {
+
+        String input = "0111010100001110101010100101010";
+        File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
+        OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
+        Encode e = new Encode();
+        e.overflow = "0101010";
+        e.pushTheBitsToFile(input,outputStream);
     }
 
     @org.junit.jupiter.api.Test
