@@ -4,8 +4,16 @@ import java.io.*;
 import java.util.*;
 
 public class Encode {
-    int  BYTE_SIZE = 8;
-    Map<Character, String> codeMap = new Hashtable<>();
+    final int  BYTE_SIZE ;
+    Map<Character, String> codeMap ;
+    String overflow ;
+
+
+    public Encode() {
+        BYTE_SIZE = 8;
+        codeMap = new Hashtable<>();
+        overflow  = new String();
+    }
 
     /**
      *
@@ -15,45 +23,77 @@ public class Encode {
      */
 
     public void encodeFile(InputStream input, String outputFileName) throws IOException {
-
-        Map<Integer, Integer> frequencies = getCharacterFrequencyOfFile(input);
-        HuffmanNode rootNode = Helper.makeHuffManTree(frequencies);
+        Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(input);
+        HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
         createCompressedFile(input,outputFileName);
         System.out.println(codeMap.toString());
     }
 
-    private void createCompressedFile(InputStream input,String outputFileName) throws IOException {
+    //TODO: make private
+    public void createCompressedFile(@NotNull InputStream input, String outputFileName) throws IOException {
         File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
         OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
-
         int inputChar;
+        int EOFFound = 0;
         StringBuilder stringBuilder = new StringBuilder();
+
         while ((inputChar = input.read()) != -1) {
-            stringBuilder.append(codeMap.get(inputChar));
-            if (stringBuilder.length() > 1000){
-                int EOFFound = psuhTheBitsToFile(stringBuilder.toString(), outputStream);
-                stringBuilder = new StringBuilder();
+            stringBuilder.append(codeMap.get((char)inputChar));
+            if (stringBuilder.length() > 8) {
+                pushTheBitsToFile(stringBuilder.toString(), outputStream);
+                stringBuilder = new StringBuilder(overflow);
+                overflow = new String();
+
             }
         }
+
+        stringBuilder.append(overflow);
+        overflow = new String();
+        // insert end of file
+        stringBuilder.append("");
+        if (stringBuilder.length() > 0){
+            pushTheBitsToFile(stringBuilder.toString(),outputStream);
+        }
+        if(overflow.length() > 0){
+            // do something
+            byte buffer = (byte) Integer.parseInt(overflow,2);
+            outputStream.write(buffer);
+        }
+        outputStream.flush();
     }
 
-    private int psuhTheBitsToFile(String string, OutputStream outputStream) throws IOException {
+    //TODO: make private
+    public int pushTheBitsToFile(String string, OutputStream outputStream) throws IOException {
+        int x = string.length();
         String temp = "";
-        byte[] buffer = new byte[10000];
-        for (int i = 0; i < 1000; i+=7) {
-            temp = string.substring(i, i+7);
-            buffer[0] = (byte) Integer.parseInt(temp, 2);
+        int j = 0;
+        int i =0;
+        byte[] buffer = new byte[(string.length() / BYTE_SIZE)];
+        for (; i + BYTE_SIZE < string.length(); i+=BYTE_SIZE) {
+            temp = string.substring(i, i + BYTE_SIZE );
+            buffer[j] = (byte) Integer.parseInt(temp, 2);
+            j++;
         }
+            // check if any bits are remaining
+        if (i<string.length() ){
+        // this means less than 8 bits are remaining
+            overflow = string.substring(i);
+        }
+        else {
+            overflow = new String();
+        }
+        // write only if there is somthing to be written
         outputStream.write(buffer);
+
         return 0;
 
     }
-
-    private void setCodeMap(HuffmanNode rootNode) {
+    //TODO: make private
+    public void setCodeMap(HuffmanNode rootNode) {
         postOrderTraversal(rootNode, "");
     }
-
+    //TODO: make publi
     private void postOrderTraversal(@NotNull HuffmanNode node, String code) {
         if (node.isLeafNode) {
             codeMap.put(node.character, code);
@@ -63,13 +103,13 @@ public class Encode {
         postOrderTraversal(node.right, code + "1");
     }
 
-
     /**
      * @param input
      * @return
      * @throws IOException
      */
-    private Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull InputStream input) throws IOException {
+    //TODO: make private
+    public Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull InputStream input) throws IOException {
         Map<Integer, Integer> frequencies = new HashMap<>();
 
         int inputChar;
@@ -93,7 +133,9 @@ public class Encode {
             }
         }
 
+        input.close();
         frequencies.put(max, 1);
         return frequencies;
     }
+
 }

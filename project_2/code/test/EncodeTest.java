@@ -13,7 +13,18 @@ class EncodeTest {
     }
 
     @org.junit.jupiter.api.Test
-    void createCompressedFile() {
+    void createCompressedFile() throws IOException {
+        File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
+        OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
+        Encode e = new Encode();
+
+        File inputFile = new File(new File("").getCanonicalPath() + "/test.txt");
+        InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
+        final Map<Integer, Integer> characterFrequencyOfFile = new Encode().getCharacterFrequencyOfFile(inputStream);
+        Helper.makeHuffManTree(characterFrequencyOfFile);
+        e.setCodeMap(Helper.makeHuffManTree(characterFrequencyOfFile));
+        inputStream = new BufferedInputStream(new FileInputStream(inputFile));
+        e.createCompressedFile(inputStream,"");
     }
 
     @org.junit.jupiter.api.Test
