@@ -3,9 +3,11 @@ import org.jetbrains.annotations.NotNull;
 import java.io.*;
 import java.util.*;
 
+
+
 public class Encode {
     final int  BYTE_SIZE ;
-    Map<Character, String> codeMap ;
+    Map<Integer, String> codeMap ;
     String overflow ;
 
 
@@ -15,30 +17,34 @@ public class Encode {
         overflow  = new String();
     }
 
-    /**
-     *
-     * @param inputFileName
-     * @param outputFileName
-     * @throws IOException
-     */
 
     public void encodeFile(String inputFileName , String outputFileName) throws IOException {
-
         Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(inputFileName);
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
+        //System.out.println(calculateSize(characterFrequencyOfFile));
         createCompressedFile(inputFileName,outputFileName);
-        System.out.println(codeMap.toString());
+        System.out.println(codeMap.size());
+    }
+
+    private int calculateSize(Map<Integer, Integer> characterFrequencyOfFile) {
+    int size =0 ;
+        for(int currentChar : characterFrequencyOfFile.keySet())
+        {
+        size = size + (characterFrequencyOfFile.get(currentChar)) * codeMap.get((char)currentChar).length();
+        }
+        // is in bits size / 8 will be in byte s
+        return size / 8 ;
     }
 
     private InputStream getInputStream(String fileName) throws IOException {
-        File inputFile = new File(new File("").getCanonicalPath() + "/analysis.txt");
+        File inputFile = new File(new File("").getCanonicalPath() + "/" + fileName);
         InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
         return inputStream;
     }
 
     private OutputStream getOuputStream(String fileName) throws IOException {
-        File output = new File(new File("").getCanonicalPath() +  "/encode.txt");
+        File output = new File(new File("").getCanonicalPath() +  "/" + fileName);
         OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
         return outputStream;
     }
@@ -48,18 +54,16 @@ public class Encode {
     public void createCompressedFile(@NotNull String inputFileName, String outputFileName) throws IOException {
         InputStream input = getInputStream(inputFileName);
         OutputStream outputStream = getOuputStream(outputFileName);
-
         int inputChar;
         int EOFFound = 0;
         StringBuilder stringBuilder = new StringBuilder();
 
         while ((inputChar = input.read()) != -1) {
-            stringBuilder.append(codeMap.get((char)inputChar));
+            stringBuilder.append(codeMap.get(inputChar));
             if (stringBuilder.length() > 8) {
                 pushTheBitsToFile(stringBuilder.toString(), outputStream);
                 stringBuilder = new StringBuilder(overflow);
                 overflow = new String();
-
             }
         }
 
@@ -79,7 +83,7 @@ public class Encode {
     }
 
     //TODO: make private
-    public int pushTheBitsToFile(String string, OutputStream outputStream) throws IOException {
+    public void pushTheBitsToFile(String string, OutputStream outputStream) throws IOException {
         int x = string.length();
         String temp = "";
         int j = 0;
@@ -100,9 +104,6 @@ public class Encode {
         }
         // write only if there is somthing to be written
         outputStream.write(buffer);
-
-        return 0;
-
     }
     //TODO: make private
     public void setCodeMap(HuffmanNode rootNode) {
@@ -111,7 +112,7 @@ public class Encode {
     //TODO: make public
     private void postOrderTraversal(@NotNull HuffmanNode node, String code) {
         if (node.isLeafNode) {
-            codeMap.put(node.character, code);
+            codeMap.put((int)node.character, code);
             return;
         }
         postOrderTraversal(node.left, code + "0");
