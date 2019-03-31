@@ -139,4 +139,11 @@ public class Encode {
         return frequencies;
     }
 
+    public long getFileSize(String s) {
+        File file = Helper.getFile(s);
+        if (file.isFile()){
+            return file.length();
+        }
+        return 0;
+    }
 }
