@@ -89,4 +89,11 @@ public class Helper {
         return null;
 
     }
+
+    public static void deleteFiles() {
+        File file = getFile(constants.SERIALIZED_FILE_NAME);
+        file.delete();
+        file = getFile(constants.ENCODED_FILE_NAME);
+        file.delete();
+    }
 }

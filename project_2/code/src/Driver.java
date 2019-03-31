@@ -8,6 +8,7 @@ public class Driver {
             encode.encodeFile();
             Decode decode = new Decode("decoded_test.txt");
             decode.decodeFile();
+            Helper.deleteFiles();
         } catch (FileNotFoundException ex) {
             System.err.println("file not found");
             ex.printStackTrace();
