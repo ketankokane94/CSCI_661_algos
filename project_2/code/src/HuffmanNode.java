@@ -1,5 +1,9 @@
-class HuffmanNode implements Comparable<HuffmanNode> {
+import java.io.Serializable;
 
+class HuffmanNode implements Comparable<HuffmanNode>, Serializable {
+    /**
+     *
+     */
     public char character;
     public int frequency;
 
@@ -18,6 +22,11 @@ class HuffmanNode implements Comparable<HuffmanNode> {
     }
 
 
+    /**
+     *
+     * @param huffmanNode
+     * @return
+     */
     @Override
     public int compareTo(HuffmanNode huffmanNode) {
 
