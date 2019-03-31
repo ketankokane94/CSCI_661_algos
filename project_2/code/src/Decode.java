@@ -4,9 +4,9 @@ public class Decode {
     String encodedFileName;
     String decodedFileName;
     HuffmanNode rootNode;
-    HuffmanNode overFlowNode ;
+    HuffmanNode overFlowNode;
 
-    public Decode( String decodedFileName) {
+    public Decode(String decodedFileName) {
         this.encodedFileName = constants.ENCODED_FILE_NAME;
         this.decodedFileName = decodedFileName;
         overFlowNode = null;
@@ -23,8 +23,8 @@ public class Decode {
         StringBuilder stringBuilder = new StringBuilder();
         while ((inputByte = (byte) inputStream.read()) != -1) {
             stringBuilder.append(getStringRepresentationOfByte(inputByte));
-                writeCharacterToFile(stringBuilder.toString(), outputStream);
-                stringBuilder = new StringBuilder();
+            writeCharacterToFile(stringBuilder.toString(), outputStream);
+            stringBuilder = new StringBuilder();
         }
         outputStream.close();
 
@@ -34,34 +34,33 @@ public class Decode {
 
         HuffmanNode node = rootNode;
 
-        if (overFlowNode != null){
-        node = overFlowNode;
+        if (overFlowNode != null) {
+            node = overFlowNode;
         }
 
         final char[] chars = string.toCharArray();
-        for (int i = 0; i < chars.length;) {
-            char c  = chars[i];
-                if(node.isLeafNode){
-                    outputStream.write(node.character);
-                    node = rootNode;
-                    overFlowNode = null;
-                }
-                else {
-                    if (c == '0')
-                        node = node.left;
-                    else
-                        node = node.right;
-                    i++;
-                }
+        for (int i = 0; i < chars.length; ) {
+            char c = chars[i];
+            if (node.isLeafNode) {
+                outputStream.write(node.character);
+                node = rootNode;
+                overFlowNode = null;
+            } else {
+                if (c == '0')
+                    node = node.left;
+                else
+                    node = node.right;
+                i++;
+            }
         }
 
-        if(node.isLeafNode){
+        if (node.isLeafNode) {
             outputStream.write(node.character);
             node = rootNode;
             overFlowNode = null;
         }
-        
-        if (node != rootNode){
+
+        if (node != rootNode) {
             overFlowNode = node;
         }
         outputStream.flush();
