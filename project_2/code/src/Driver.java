@@ -4,7 +4,10 @@ public class Driver {
 
     public static void main(String[] args) {
         try {
-            new Encode().encodeFile("analysis.txt", "encode.txt");
+            Encode encode = new Encode("test.txt");
+            encode.encodeFile();
+            Decode decode = new Decode("decoded_test.txt");
+            decode.decodeFile();
         } catch (FileNotFoundException ex) {
             System.err.println("file not found");
             ex.printStackTrace();
