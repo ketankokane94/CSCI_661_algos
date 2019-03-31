@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.Map;
 import java.util.PriorityQueue;
 
@@ -29,6 +30,22 @@ public class Helper {
 
         }
         return queue.remove();
+
+    }
+
+    public static void saveTree(HuffmanNode rootNode, String inputFileName){
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(inputFileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(rootNode);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

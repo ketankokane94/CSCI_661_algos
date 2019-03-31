@@ -22,10 +22,11 @@ public class Encode {
         Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(inputFileName);
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
-        //System.out.println(calculateSize(characterFrequencyOfFile));
         createCompressedFile(inputFileName,outputFileName);
+        Helper.saveTree(rootNode,"");
         System.out.println(codeMap.size());
     }
+
 
     private int calculateSize(Map<Integer, Integer> characterFrequencyOfFile) {
     int size =0 ;
