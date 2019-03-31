@@ -1,8 +1,6 @@
 import org.jetbrains.annotations.NotNull;
-
 import java.io.*;
 import java.util.*;
-
 
 
 public class Encode {
@@ -23,7 +21,7 @@ public class Encode {
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
         createCompressedFile(inputFileName,outputFileName);
-        Helper.saveTree(rootNode,"");
+        Helper.saveTree(rootNode,constants.SERIALIZED_FILE_NAME);
         System.out.println(codeMap.size());
     }
 
@@ -38,23 +36,11 @@ public class Encode {
         return size / 8 ;
     }
 
-    private InputStream getInputStream(String fileName) throws IOException {
-        File inputFile = new File(new File("").getCanonicalPath() + "/" + fileName);
-        InputStream inputStream = new BufferedInputStream(new FileInputStream(inputFile));
-        return inputStream;
-    }
-
-    private OutputStream getOuputStream(String fileName) throws IOException {
-        File output = new File(new File("").getCanonicalPath() +  "/" + fileName);
-        OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(output));
-        return outputStream;
-    }
-
 
     //TODO: make private
     public void createCompressedFile(@NotNull String inputFileName, String outputFileName) throws IOException {
-        InputStream input = getInputStream(inputFileName);
-        OutputStream outputStream = getOuputStream(outputFileName);
+        InputStream input = Helper.getInputStream(inputFileName);
+        OutputStream outputStream = Helper.getOuputStream(outputFileName);
         int inputChar;
         int EOFFound = 0;
         StringBuilder stringBuilder = new StringBuilder();
@@ -106,6 +92,7 @@ public class Encode {
         // write only if there is somthing to be written
         outputStream.write(buffer);
     }
+
     //TODO: make private
     public void setCodeMap(HuffmanNode rootNode) {
         postOrderTraversal(rootNode, "");
@@ -120,6 +107,7 @@ public class Encode {
         postOrderTraversal(node.right, code + "1");
     }
 
+
     /**
      * @param inputFileName
      * @return
@@ -127,7 +115,7 @@ public class Encode {
      */
     //TODO: make private
     public Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull String inputFileName) throws IOException {
-        InputStream input = getInputStream(inputFileName);
+        InputStream input = Helper.getInputStream(inputFileName);
         Map<Integer, Integer> frequencies = new HashMap<>();
 
         int inputChar;
@@ -150,6 +138,7 @@ public class Encode {
                 max = temp;
             }
         }
+
         input.close();
         frequencies.put(max, 1);
         return frequencies;

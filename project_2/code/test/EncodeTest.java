@@ -24,7 +24,7 @@ class EncodeTest {
         Helper.makeHuffManTree(characterFrequencyOfFile);
         e.setCodeMap(Helper.makeHuffManTree(characterFrequencyOfFile));
         inputStream = new BufferedInputStream(new FileInputStream(inputFile));
-        e.createCompressedFile("test.txt","");
+        e.createCompressedFile("test.txt","testEncode.txt");
     }
 
     @org.junit.jupiter.api.Test

@@ -18,8 +18,8 @@ read a byte write a byte
 
 modules
 1.read file done
-2.construct Huffman codes 
-3.Encode text using generated huffman codes
+2.construct Huffman codes  done
+3.Encode text using generated huffman codes done
 4.calculate the compression ratio =  original / encoded {that means minimum compression ration is 1}
 5.decode the file using encoded file only
 
@@ -77,3 +77,10 @@ problem:
 
  Map should be character and what ? bitset ?
  
+
+ used priority queue implementation of java to store the nodes of huffman
+ which allowed for log(n) access 
+
+ used HashMap for to store the frequencies of the character, which allowed for o(n) to calculate the total 
+ frequencies of all the characters in the file
+
