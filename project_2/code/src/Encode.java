@@ -1,4 +1,5 @@
 import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.util.*;
 
@@ -6,16 +7,16 @@ import java.util.*;
 public class Encode {
     private String inputFileName;
     private String encodedFileName;
-    private final int  BYTE_SIZE ;
-    private Map<Integer, String> codeMap ;
-    private String overflow ;
+    private final int BYTE_SIZE;
+    private Map<Integer, String> codeMap;
+    private String overflow;
 
     public Encode(String inputFileName) {
         this.inputFileName = inputFileName;
         this.encodedFileName = constants.ENCODED_FILE_NAME;
         BYTE_SIZE = 8;
         codeMap = new Hashtable<>();
-        overflow  = new String();
+        overflow = new String();
     }
 
 
@@ -23,20 +24,18 @@ public class Encode {
         Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(inputFileName);
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
-        createCompressedFile(inputFileName,encodedFileName);
-        Helper.saveTree(rootNode,constants.SERIALIZED_FILE_NAME);
-        //System.out.println(codeMap.size());
+        createCompressedFile(inputFileName, encodedFileName);
+        Helper.saveTree(rootNode, constants.SERIALIZED_FILE_NAME);
     }
 
 
     private int calculateSize(Map<Integer, Integer> characterFrequencyOfFile) {
-    int size =0 ;
-        for(int currentChar : characterFrequencyOfFile.keySet())
-        {
-        size = size + (characterFrequencyOfFile.get(currentChar)) * codeMap.get((char)currentChar).length();
+        int size = 0;
+        for (int currentChar : characterFrequencyOfFile.keySet()) {
+            size = size + (characterFrequencyOfFile.get(currentChar)) * codeMap.get((char) currentChar).length();
         }
         // is in bits size / 8 will be in byte s
-        return size / 8 ;
+        return size / 8;
     }
 
 
@@ -61,12 +60,11 @@ public class Encode {
         overflow = new String();
         // insert end of file
         stringBuilder.append("");
-        if (stringBuilder.length() > 0){
-            pushTheBitsToFile(stringBuilder.toString(),outputStream);
+        if (stringBuilder.length() > 0) {
+            pushTheBitsToFile(stringBuilder.toString(), outputStream);
         }
-        if(overflow.length() > 0){
-            // do something
-            byte buffer = (byte) Integer.parseInt(overflow,2);
+        if (overflow.length() > 0) {
+            byte buffer = (byte) Integer.parseInt(overflow, 2);
             outputStream.write(buffer);
         }
         outputStream.flush();
@@ -74,28 +72,21 @@ public class Encode {
 
     //TODO: make private
     public void pushTheBitsToFile(String string, OutputStream outputStream) throws IOException {
-        int x = string.length();
         String temp = "";
-        int j = 0;
-        int i =0;
-        byte[] buffer = new byte[(string.length() / BYTE_SIZE)];
-        for (; i + BYTE_SIZE < string.length(); i+=BYTE_SIZE) {
-            temp = string.substring(i, i + BYTE_SIZE );
-            //buffer[j] = (byte) Integer.parseInt(temp, 2);
+
+        int i = 0;
+
+        for (; i + BYTE_SIZE < string.length(); i += BYTE_SIZE) {
+            temp = string.substring(i, i + BYTE_SIZE);
             outputStream.write((byte) Integer.parseInt(temp, 2));
-            j++;
         }
-            // check if any bits are remaining
-        if (i<string.length() ){
-        // this means less than 8 bits are remaining
+        // check if any bits are remaining
+        if (i < string.length()) {
+            // this means less than 8 bits are remaining
             overflow = string.substring(i);
-        }
-        else {
+        } else {
             overflow = new String();
         }
-        // write only if there is somthing to be written
-
-       // outputStream.write(buffer);
     }
 
     //TODO: make private
@@ -107,7 +98,7 @@ public class Encode {
 
     private void postOrderTraversal(@NotNull HuffmanNode node, String code) {
         if (node.isLeafNode) {
-            codeMap.put((int)node.character, code);
+            codeMap.put((int) node.character, code);
             return;
         }
         postOrderTraversal(node.left, code + "0");
@@ -115,11 +106,7 @@ public class Encode {
     }
 
 
-    /**
-     * @param inputFileName
-     * @return
-     * @throws IOException
-     */
+
     //TODO: make private
     public Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull String inputFileName) throws IOException {
 
