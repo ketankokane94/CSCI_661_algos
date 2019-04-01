@@ -18,34 +18,28 @@ public class Decode {
         InputStream inputStream = Helper.getInputStream(encodedFileName);
         OutputStream outputStream = Helper.getOuputStream(decodedFileName);
 
-
         byte inputByte;
         StringBuilder stringBuilder = new StringBuilder();
-        int temp ;
+        int temp;
         //while ((inputByte = (byte) inputStream.read()) != -1) {
         while ((temp = inputStream.read()) != -1) {
             inputByte = (byte) temp;
             stringBuilder.append(getStringRepresentationOfByte(inputByte));
-            writeCharacterToFile(stringBuilder.toString(), outputStream);
-            stringBuilder = new StringBuilder();
-        }
-        outputStream.close();
-/*
-        while ((inputChar = input.read()) != -1) {
-            stringBuilder.append(codeMap.get(inputChar));
-            if (stringBuilder.length() > 1000) {
-                pushTheBitsToFile(stringBuilder.toString(), outputStream);
-                stringBuilder = new StringBuilder(overflow);
-                overflow = new String();
+            if (stringBuilder.length() > 10000) {
+                writeCharacterToFile(stringBuilder.toString(), outputStream);
+                stringBuilder = new StringBuilder();
             }
         }
- */
+
+        if (stringBuilder.length() > 0) {
+            writeCharacterToFile(stringBuilder.toString(), outputStream);
+        }
+        outputStream.flush();
+        outputStream.close();
     }
 
     private void writeCharacterToFile(String string, OutputStream outputStream) throws IOException {
-
         HuffmanNode node = rootNode;
-
         if (overFlowNode != null) {
             node = overFlowNode;
         }

@@ -38,7 +38,7 @@ public class Encode {
 
         while ((inputChar = input.read()) != -1) {
             stringBuilder.append(codeMap.get(inputChar));
-            if (stringBuilder.length() > 1000) {
+            if (stringBuilder.length() > 10000) {
                 pushTheBitsToFile(stringBuilder.toString(), outputStream);
                 stringBuilder = new StringBuilder(overflow);
                 overflow = new String();
