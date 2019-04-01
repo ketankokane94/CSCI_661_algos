@@ -6,6 +6,7 @@ import java.util.*;
 public class Helper {
     public static void main(String args[]) throws IOException {
         Helper.createFrequencyEstimation();
+        Helper.getHeuristicFrequency();
     }
 
     public static HuffmanNode makeHuffManTree(Map<Integer, Integer> frequency) {
@@ -100,8 +101,9 @@ public class Helper {
         file.delete();
     }
 
-    public static  Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull String inputFileName) throws IOException {
-
+    public static  Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull String inputFileName, boolean getHueristicFrequeny) throws IOException {
+    if (getHueristicFrequeny)
+        return getHeuristicFrequency();
         InputStream input = Helper.getInputStream(inputFileName);
         Map<Integer, Integer> frequencies = new HashMap<>();
 
@@ -115,24 +117,12 @@ public class Helper {
                 frequencies.put(inputChar, 1);
             }
         }
-        // GET MAX INT FROM KEY
-        Set<Integer> keys = frequencies.keySet();
-        Iterator iterator = keys.iterator();
-        int max = Integer.MIN_VALUE;
-        while (iterator.hasNext()) {
-            int temp = frequencies.get(iterator.next());
-            if (temp > max) {
-                max = temp;
-            }
-        }
-
         input.close();
-        // frequencies.put(max, 1);
         return frequencies;
     }
 
     public  static  void createFrequencyEstimation() throws IOException {
-        final Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(constants.FREQUENCY_ESTIMATION_FILE);
+        final Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(constants.FREQUENCY_ESTIMATION_FILE, false);
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(getFile(constants.FREQUENCY_HASH_MAP_FILE));
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -145,5 +135,22 @@ public class Helper {
             e.printStackTrace();
         }
 
+    }
+
+
+    public static Map<Integer, Integer> getHeuristicFrequency(){
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(getFile(constants.FREQUENCY_HASH_MAP_FILE));
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            return (Map<Integer, Integer>) objectInputStream.readObject();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

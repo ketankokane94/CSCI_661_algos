@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Driver {
 
-    private void RunExperimentForFile(String file) throws IOException {
+    private void RunExperimentForFile(String file,boolean useEstimatedFrequency) throws IOException {
 
         List<Long> initialFileSize = new ArrayList<>();
         List<Long> encodeTime = new ArrayList<>();
         List<Long> decodeTime = new ArrayList<>();
         List<Long> afterCompressionFileSize = new ArrayList<>();
         Encode encode = new Encode(file);
-        Decode decode = new Decode("decoded_i.txt");
+        Decode decode = new Decode("decoded_.txt");
         for (int runCount = 0; runCount < 1; runCount++) {
             initialFileSize.add(encode.getFileSize(file));
             long startTime = System.nanoTime();
-            encode.encodeFile();
+            encode.encodeFile(useEstimatedFrequency);
             long endTime = System.nanoTime();
             long duration = (endTime - startTime);
             encodeTime.add(duration);
@@ -52,7 +52,7 @@ public class Driver {
     public static void main(String[] args) {
         try {
             Driver driver = new Driver();
-            driver.RunExperimentForFile("data/hundredMb.txt");
+            driver.RunExperimentForFile("data/001.txt", true);
         } catch (FileNotFoundException ex) {
             System.err.println("file not found");
             ex.printStackTrace();

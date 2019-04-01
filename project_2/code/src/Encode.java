@@ -20,8 +20,11 @@ public class Encode {
     }
 
 
-    public void encodeFile() throws IOException {
-        Map<Integer, Integer> characterFrequencyOfFile = Helper.getCharacterFrequencyOfFile(inputFileName);
+    public void encodeFile(boolean useEstimatedFrequency) throws IOException {
+        Map<Integer, Integer> characterFrequencyOfFile;
+
+        characterFrequencyOfFile = Helper.getCharacterFrequencyOfFile(inputFileName, useEstimatedFrequency);
+
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
         createCompressedFile(inputFileName, encodedFileName);
@@ -37,7 +40,9 @@ public class Encode {
         StringBuilder stringBuilder = new StringBuilder();
 
         while ((inputChar = input.read()) != -1) {
-            stringBuilder.append(codeMap.get(inputChar));
+            if(codeMap.get(inputChar) != null){
+                stringBuilder.append(codeMap.get(inputChar));
+            }
             if (stringBuilder.length() > 10000) {
                 pushTheBitsToFile(stringBuilder.toString(), outputStream);
                 stringBuilder = new StringBuilder(overflow);
@@ -95,13 +100,12 @@ public class Encode {
     }
 
 
-
     //TODO: make private
 
 
     public long getFileSize(String s) {
         File file = Helper.getFile(s);
-        if (file.isFile()){
+        if (file.isFile()) {
             return file.length();
         }
         return 0;
