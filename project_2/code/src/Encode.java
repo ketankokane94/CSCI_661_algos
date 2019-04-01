@@ -21,7 +21,7 @@ public class Encode {
 
 
     public void encodeFile() throws IOException {
-        Map<Integer, Integer> characterFrequencyOfFile = getCharacterFrequencyOfFile(inputFileName);
+        Map<Integer, Integer> characterFrequencyOfFile = Helper.getCharacterFrequencyOfFile(inputFileName);
         HuffmanNode rootNode = Helper.makeHuffManTree(characterFrequencyOfFile);
         setCodeMap(rootNode);
         createCompressedFile(inputFileName, encodedFileName);
@@ -97,36 +97,7 @@ public class Encode {
 
 
     //TODO: make private
-    public Map<Integer, Integer> getCharacterFrequencyOfFile(@NotNull String inputFileName) throws IOException {
 
-        InputStream input = Helper.getInputStream(inputFileName);
-        Map<Integer, Integer> frequencies = new HashMap<>();
-
-        int inputChar;
-        while ((inputChar = input.read()) != -1) {
-            if (frequencies.containsKey(inputChar)) {
-                // update the count value
-                frequencies.put(inputChar, frequencies.get(inputChar) + 1);
-            } else {
-                // add the character in the
-                frequencies.put(inputChar, 1);
-            }
-        }
-        // GET MAX INT FROM KEY
-        Set<Integer> keys = frequencies.keySet();
-        Iterator iterator = keys.iterator();
-        int max = Integer.MIN_VALUE;
-        while (iterator.hasNext()) {
-            int temp = frequencies.get(iterator.next());
-            if (temp > max) {
-                max = temp;
-            }
-        }
-
-        input.close();
-       // frequencies.put(max, 1);
-        return frequencies;
-    }
 
     public long getFileSize(String s) {
         File file = Helper.getFile(s);
