@@ -21,13 +21,25 @@ public class Decode {
 
         byte inputByte;
         StringBuilder stringBuilder = new StringBuilder();
-        while ((inputByte = (byte) inputStream.read()) != -1) {
+        int temp ;
+        //while ((inputByte = (byte) inputStream.read()) != -1) {
+        while ((temp = inputStream.read()) != -1) {
+            inputByte = (byte) temp;
             stringBuilder.append(getStringRepresentationOfByte(inputByte));
             writeCharacterToFile(stringBuilder.toString(), outputStream);
             stringBuilder = new StringBuilder();
         }
         outputStream.close();
-
+/*
+        while ((inputChar = input.read()) != -1) {
+            stringBuilder.append(codeMap.get(inputChar));
+            if (stringBuilder.length() > 1000) {
+                pushTheBitsToFile(stringBuilder.toString(), outputStream);
+                stringBuilder = new StringBuilder(overflow);
+                overflow = new String();
+            }
+        }
+ */
     }
 
     private void writeCharacterToFile(String string, OutputStream outputStream) throws IOException {
@@ -67,8 +79,8 @@ public class Decode {
     }
 
     private String getStringRepresentationOfByte(byte inputByte) {
-        //String s1 = String.format("%8s", Integer.toBinaryString(inputByte & 0xFF)).replace(' ', '0');
-        return (Integer.toBinaryString(inputByte & 0xFF)).replace(' ', '0');
+        return String.format("%8s", Integer.toBinaryString(inputByte & 0xFF)).replace(' ', '0');
+        //return (Integer.toBinaryString(inputByte & 0xFF)).replace(' ', '0');
     }
 
 

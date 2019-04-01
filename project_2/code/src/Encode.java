@@ -29,27 +29,16 @@ public class Encode {
     }
 
 
-    private int calculateSize(Map<Integer, Integer> characterFrequencyOfFile) {
-        int size = 0;
-        for (int currentChar : characterFrequencyOfFile.keySet()) {
-            size = size + (characterFrequencyOfFile.get(currentChar)) * codeMap.get((char) currentChar).length();
-        }
-        // is in bits size / 8 will be in byte s
-        return size / 8;
-    }
-
-
     //TODO: make private
     public void createCompressedFile(@NotNull String inputFileName, String outputFileName) throws IOException {
         InputStream input = Helper.getInputStream(inputFileName);
         OutputStream outputStream = Helper.getOuputStream(outputFileName);
         int inputChar;
-        int EOFFound = 0;
         StringBuilder stringBuilder = new StringBuilder();
 
         while ((inputChar = input.read()) != -1) {
             stringBuilder.append(codeMap.get(inputChar));
-            if (stringBuilder.length() > 7) {
+            if (stringBuilder.length() > 1000) {
                 pushTheBitsToFile(stringBuilder.toString(), outputStream);
                 stringBuilder = new StringBuilder(overflow);
                 overflow = new String();
@@ -59,7 +48,7 @@ public class Encode {
         stringBuilder.append(overflow);
         overflow = new String();
         // insert end of file
-        stringBuilder.append("");
+        //stringBuilder.append("");
         if (stringBuilder.length() > 0) {
             pushTheBitsToFile(stringBuilder.toString(), outputStream);
         }
@@ -135,7 +124,7 @@ public class Encode {
         }
 
         input.close();
-        frequencies.put(max, 1);
+       // frequencies.put(max, 1);
         return frequencies;
     }
 
