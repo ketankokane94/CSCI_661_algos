@@ -84,3 +84,46 @@ problem:
  used HashMap for to store the frequencies of the character, which allowed for o(n) to calculate the total 
  frequencies of all the characters in the file
 
+
+
+Data: 
+used 50 different samples texts from bbc documentary dataset ranging fom size 1KB to 4KB and comfortably 
+exceeding the one page length requirement.
+
+Also to stress test the code, used file sizes of 1KB, 1MB, 10 MB, 100MB 
+and noted there time, as these file sizes can take a long time to complete 11 iterations, removed it from the data folder. 
+
+but below code was used to generate the files.
+
+Instructions to run the code.
+
+the code is divided up in x files
+Driver.java Main driver code which runs the required Experiment, and calculates the datapoints average over 11 iterations
+Helper.java Common code which is required for encoding and decoding resides here
+Constants.java the constants used by the program are stored in this file
+Encoding.java contains the code to actually encode the give file, the encoded file is stored in E.txt
+as the code is run multiple time and for 50 different sample, to avoid things getting intractable. every encoding overries the 
+E.txt file so if encoding needs to be seen, then only can be done for last encoded file.
+
+
+decoding.java 
+todo create new decoded file
+
+creates a decoding file
+
+all Files which needs to be encoded are to be kept in data directory
+
+the code will encode the file and then immediately decode the file using both actual frequencies and estimated frequencies
+and print results accordingly 
+
+Mandatory files that needs to be there for the run to run successfully.
+
+merged.txt
+
+execute the below code to run the whole Experiment 
+javac *.java
+java Helper 
+java Driver
+
+
+
