@@ -1,4 +1,4 @@
-public class Vertex {
+public class Vertex implements Comparable<Vertex>{
     String Name;
     boolean isSource;
     boolean isSink;
@@ -9,7 +9,8 @@ public class Vertex {
 
     @Override
     public boolean equals(Object obj) {
-        return  ((Vertex) obj).Name.equals(this.Name);
+        Vertex temp = (Vertex) obj;
+        return temp.Name.equals(this.Name);
     }
 
     @Override
@@ -19,5 +20,14 @@ public class Vertex {
                 ", isSource=" + isSource +
                 ", isSink=" + isSink +
                 '}';
+    }
+
+
+    @Override
+    public int compareTo(Vertex temp) {
+        if (temp.Name.equals(this.Name))
+        return 0;
+        else
+            return 1;
     }
 }
