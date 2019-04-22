@@ -1,9 +1,14 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
     List<Vertex> vertices;
     List<Edge> edges;
 
+    public Graph() {
+        vertices = new ArrayList<>();
+        edges = new ArrayList<>();
+    }
 
     public boolean addEdge(Edge edge){
         // check if the sources and distination exists in the vertex list or not if no then add them

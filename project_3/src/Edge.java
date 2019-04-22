@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Edge {
     Vertex source, destination;
     int capacity;
@@ -11,6 +13,24 @@ public class Edge {
     // override the equals method so the ArrayList can use to check if two vertices and edges are same
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        Edge edge = (Edge) obj;
+        if (this.source.equals(edge.source))
+            if (this.destination.equals(edge.destination))
+                return true;
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(source, destination, capacity);
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "source=" + source +
+                ", destination=" + destination +
+                ", capacity=" + capacity +
+                '}';
     }
 }
