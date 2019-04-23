@@ -53,8 +53,10 @@ public class Graph {
         return collect.get(0);
     }
 
-    public void getPath(Vertex source, Vertex sink) {
+    public boolean getPath(Vertex source, Vertex sink) {
         final HashMap<Vertex, Vertex> augmentingPathVertex = getAugmentingPathVertex(source, sink);
+        if(!augmentingPathVertex.keySet().contains(sink))
+            return false;
         ArrayList<Vertex> vertexArrayList = new ArrayList<>();
         Vertex current = sink;
         while (!current.equals(source)) {
@@ -71,6 +73,7 @@ public class Graph {
             }
         }
         System.out.println("min= " + min);
+        flows.add(min);
         for (int i = vertexArrayList.size() - 1; i > 0 ; i--) {
             Edge edge = getEdge(vertexArrayList.get(i), vertexArrayList.get(i-1));
            // add an edge from right vertex to left vertex with the minimum capacity
@@ -82,6 +85,7 @@ public class Graph {
         System.out.println(vertexArrayList.toString());
         System.out.println(vertices.size());
         System.out.println(edges.size());
+        return true;
     }
 
     public HashMap<Vertex, Vertex> getAugmentingPathVertex(Vertex source, Vertex sink) {

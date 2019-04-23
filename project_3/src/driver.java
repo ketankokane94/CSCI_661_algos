@@ -28,9 +28,15 @@ public class driver {
         System.out.println(graph.vertices.size());
         System.out.println(graph.edges.size());
 
-        graph.getPath(source,sink);
-        graph.getPath(source,sink);
-        graph.getPath(source,sink);
+        while (graph.getPath(source,sink))
+        {
+
+        }
+        int x = 0;
+        for (int i = 0; i < graph.flows.size(); i++) {
+            x += graph.flows.get(i);
+        }
+        System.out.println("Maximum flow= " + x);
 
     }
 }
