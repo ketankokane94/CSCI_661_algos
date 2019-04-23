@@ -12,7 +12,7 @@ public class driver {
         graph.addEdge(new Edge(new Vertex("1"), new Vertex("3"), 12));
 
         graph.addEdge(new Edge(new Vertex("2"), new Vertex("1"), 4));
-        //graph.addEdge(new Edge(new Vertex("2"), new Vertex("4"), 14));
+        graph.addEdge(new Edge(new Vertex("2"), new Vertex("4"), 14));
 
 
         graph.addEdge(new Edge(new Vertex("3"), sink, 20));
@@ -28,6 +28,8 @@ public class driver {
         System.out.println(graph.vertices.size());
         System.out.println(graph.edges.size());
 
+        graph.getPath(source,sink);
+        graph.getPath(source,sink);
         graph.getPath(source,sink);
 
     }

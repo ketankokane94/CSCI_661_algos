@@ -11,7 +11,13 @@ public class Graph {
         edges = new ArrayList<>();
     }
 
-    public boolean addEdge(Edge edge) {
+    public boolean addEdge(Edge edge) {int index;
+        if (( index = edges.indexOf(edge))!= -1)
+        {
+            Edge edge1 = edges.get(index);
+            edge1.capacity += edge.capacity;
+            return true;
+        }
         // check if the sources and distination exists in the vertex list or not if no then add them
         if (!containsVertex(edge.source))
             addVertex(edge.source);
@@ -42,6 +48,11 @@ public class Graph {
         return vertices.contains(vertex);
     }
 
+    public Edge getEdge(Vertex source, Vertex destination){
+        final List<Edge> collect = edges.stream().filter(edge -> edge.source.equals(source) && edge.destination.equals(destination)).collect(Collectors.toList());
+        return collect.get(0);
+    }
+
     public void getPath(Vertex source, Vertex sink) {
         final HashMap<Vertex, Vertex> augmentingPathVertex = getAugmentingPathVertex(source, sink);
         ArrayList<Vertex> vertexArrayList = new ArrayList<>();
@@ -52,18 +63,32 @@ public class Graph {
         }
         vertexArrayList.add(current);
 
-       // Vertex left = vertexArrayList.re
+        int min = Integer.MAX_VALUE;
+        for (int i = vertexArrayList.size() - 1; i > 0 ; i--) {
+            Edge edge = getEdge(vertexArrayList.get(i), vertexArrayList.get(i-1));
+            if (min > edge.capacity){
+                min = edge.capacity;
+            }
+        }
+        System.out.println("min= " + min);
+        for (int i = vertexArrayList.size() - 1; i > 0 ; i--) {
+            Edge edge = getEdge(vertexArrayList.get(i), vertexArrayList.get(i-1));
+           // add an edge from right vertex to left vertex with the minimum capacity
+            addEdge(new Edge(vertexArrayList.get(i-1),vertexArrayList.get(i),min));
+            // now reduce the capacity from left to right
+            addEdge(new Edge(vertexArrayList.get(i),vertexArrayList.get(i-1),-min));
 
+        }
         System.out.println(vertexArrayList.toString());
+        System.out.println(vertices.size());
+        System.out.println(edges.size());
     }
 
     public HashMap<Vertex, Vertex> getAugmentingPathVertex(Vertex source, Vertex sink) {
         Stack<Vertex> stack = new Stack<>();
         Set<Vertex> visited = new TreeSet<>();
         HashMap<Vertex, Vertex> hashMap = new HashMap<>();
-
         stack.push(source);
-
         while (!stack.empty()) {
             Vertex current = stack.pop();
             if (visited.contains(current))
