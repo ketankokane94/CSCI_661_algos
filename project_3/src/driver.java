@@ -22,16 +22,8 @@ public class driver {
         graph.addEdge(new Edge(new Vertex("4"), sink, 7));
 
 
-        //System.out.println(graph.edges.toString());
-        //System.out.println(graph.vertices.toString());
 
-        System.out.println(graph.vertices.size());
-        System.out.println(graph.edges.size());
-
-        while (graph.getPath(source,sink))
-        {
-
-        }
+        while (graph.getPathFrom(source,sink)){}
         int x = 0;
         for (int i = 0; i < graph.flows.size(); i++) {
             x += graph.flows.get(i);
