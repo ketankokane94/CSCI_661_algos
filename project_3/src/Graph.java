@@ -94,7 +94,8 @@ public class Graph {
             if (visited.contains(current))
                 continue;
             for (Vertex vertex : getNeightbors(current)) {
-                hashMap.put(vertex, current);
+                if(!hashMap.keySet().contains(vertex))
+                    hashMap.put(vertex, current);
                 if (vertex.equals(sink))
                     return hashMap;
                 stack.push(vertex);
