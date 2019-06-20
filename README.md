@@ -19,5 +19,15 @@ Repository to include implementation of data structure and few problem solutions
   </ol>
 
 # Tree
+<ol>
+<li>Lowest Common Ancestor</li>
+<li>Convert Array to Heap(complete Binart Tree)</li>
+<li></li>
+</ol>
 
 # Strings and Arrays
+<ol>
+<li>URLify (replace ' ' with '%20'</li>
+<li>remove characters (remove a set of characters from a given string)</li>
+<li></li>
+</ol>
