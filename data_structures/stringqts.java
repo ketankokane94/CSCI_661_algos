@@ -6,6 +6,7 @@
  RemoveChars (remove a list of characters from a given string)
  Reverse Words in a string
  Palindrome permuation
+ One away : zero or one edit distance string
   */
 import java.util.HashSet;
 
@@ -18,6 +19,7 @@ public class stringqts {
         System.out.println(removeChars("aaaaade","ad"));
         reverseWords("ketan am i");
         System.out.println(PalindromePermutation("tactcao"));
+        System.out.println(zeroOrOneEditDistance("paless", ""));
     }
 
     /**
@@ -146,5 +148,38 @@ public class stringqts {
             }
         }
         return true;
+    }
+    
+    /**
+     * One Away: There are three types of edits that can be performed on strings: 
+     * insert a character, remove a character, or replace a character. Given two strings, 
+     * write a function to check if they are one edit (or zero edits) away.
+     */
+    public static boolean zeroOrOneEditDistance(String one, String two){
+        int occurances [] = new int[256];
+
+        for (int i = 0; i < one.length(); i++) {
+            occurances[(int)one.charAt(i)] = occurances[(int)one.charAt(i)] + 1;
+        }
+        for (int i = 0; i < two.length(); i++) {
+            occurances[(int)two.charAt(i)] = occurances[(int)two.charAt(i)] - 1;
+        }
+        int difference = 0;
+        for (int i = 0; i < 256; i++) {
+            if (occurances[i] == 0)
+            continue;
+            if(occurances[i] > 1 || occurances[i] < -1){
+                return false;
+            }
+            difference++;
+        }
+        int allowedDifferences = one.length() == two.length() ? 2 : 1; 
+        
+        if(difference == allowedDifferences){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
