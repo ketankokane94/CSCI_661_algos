@@ -11,8 +11,9 @@ public class stringqts {
     public static void main(String[] args) {
 
         String result = URLify("abc  b a        ", 8);
-        //System.out.println(result);
+        System.out.println(result);
         System.out.println(removeChars("aaaaade","ad"));
+        reverseWords("ketan am i");
     }
 
     /**
@@ -75,5 +76,37 @@ public class stringqts {
             sb.append(inputCharArray[i]);
         }
         return sb.toString();
+    }
+
+    private static char[] reverse(char[] input,int left, int right){
+        char temp;
+        for(;left < right;left++, right--){
+            temp = input[left];
+            input[left] = input[right];
+            input[right] = temp;
+        }
+        return input;
+    }
+    public static String reverseWords(String inputStr){
+        char[] input = inputStr.toCharArray();
+        input = reverse(input, 0, input.length-1);
+    
+        int left , right;
+        left = 0; right = 1;
+
+        while(right < input.length){
+            if(input[right] != ' '){
+                right ++;
+            }
+            else{
+                input = reverse(input, left, right-1);
+                left = right + 1;
+                right = right + 2;
+            }
+        }
+        if (left < input.length - 1){
+            input = reverse(input, left, right-1);
+        }
+        return new String(input);
     }
 }
