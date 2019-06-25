@@ -10,7 +10,6 @@ Repository to include implementation of data structure and few problem solutions
   <li>Sum of two linked List</li>
   <li>Partition a linked list based on given value</li>
   <li>Flatten a given 2D linked list</li>
-  <li>Check if the linked List is cyclic or no</li>
   <li>Check if two linked list intersect each other</li>
   <li>Reverse a linked List</li>
   <li>Check if the Linked List is a palindrome</li>
@@ -29,5 +28,10 @@ Repository to include implementation of data structure and few problem solutions
 <ol>
 <li>URLify (replace ' ' with '%20'</li>
 <li>remove characters (remove a set of characters from a given string)</li>
-<li></li>
+<li>String permutation</li>
+<li>String palindrome permutation</li>
+<li>One way edit distant</li>
+<li>String Compression</li>
+<li>Reverse words in a string</li>
+<li>Convert String to integer (Honers rule)</li>
 </ol>
