@@ -1,3 +1,4 @@
+
 /**
  * @author Ketan Kokane
  * Basic implementation of Binary Search Tree
@@ -7,6 +8,7 @@
  * Problems solution:
  * Lowest Common Ancestor
  * Transform A sorted Array into a Complete Binary Tree (Heap)
+ * Validate BST
  */
 
 
@@ -91,6 +93,23 @@ public class BinarySearchTree<E extends Comparable> {
         return node;
     }
 
+    public boolean validateBST(TreeNode node){
+            // if its a leaf node return true 
+            if (node == null || (node.left == null &&  node.right == null)){
+                return true;
+            }
+            // check if the left node has value greater than current node
+            if (node.left != null && node.left.value.compareTo(node.value) > 0 ){
+                return false;
+            }
+            // check if the right node has value smaller or ever equal to current node
+            if (node.right != null && node.right.value.compareTo(node.value) <= 0 ){
+                return false;
+            }
+            return validateBST(node.left) && validateBST(node.right);
+            
+    }
+
 
     public static void main(String args[]) {
         BinarySearchTree bst = new BinarySearchTree();
@@ -107,6 +126,7 @@ public class BinarySearchTree<E extends Comparable> {
         Integer [] arrays = {1,2,3,4,5,6,7,8};
         bst.transformAsHeap(arrays);
         System.out.println(bst.inOrdertraversal());
+        System.out.println(bst.validateBST(bst.rootNode));
 
     }
 }
