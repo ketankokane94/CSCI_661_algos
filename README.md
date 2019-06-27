@@ -20,11 +20,11 @@ Repository to include implementation of data structure and few problem solutions
 # Tree
 <ol>
 <li>Lowest Common Ancestor</li>
-<li>Convert Array to Heap(complete Binart Tree)</li>
+<li>Convert Array to Heap(complete Binary Tree)</li>
 <li>Binary Search Tree sequence</li>
 <li>Validate BST</li>
 <li>In order successor</li>
-<li></li>
+<li>Construct BST with minimum height</li>
 </ol>
 
 # Strings and Arrays
