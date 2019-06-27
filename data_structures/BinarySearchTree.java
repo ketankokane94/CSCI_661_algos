@@ -9,6 +9,7 @@
  * Lowest Common Ancestor
  * Transform A sorted Array into a Complete Binary Tree (Heap)
  * Validate BST
+ * construct Tree with minimum height (Cant be done if array is not ordered)
  */
 
 
@@ -79,8 +80,8 @@ public class BinarySearchTree<E extends Comparable> {
             return lcaRec(left,right,node.right);
     }
 
-    public void transformAsHeap(E[] array){
-        rootNode = heapify(array,0);
+    public TreeNode transformAsHeap(E[] array){
+        return heapify(array,0);
     }
 
     public TreeNode heapify(E[] array,int index){
@@ -110,6 +111,18 @@ public class BinarySearchTree<E extends Comparable> {
             
     }
 
+    public TreeNode constructMinHeightBT(E [] elements, int left, int right){
+        
+        if ( right < left)
+            return null;    
+        int middle = (right+left) >> 1;
+        TreeNode root = new TreeNode(elements[middle]);
+        root.left = constructMinHeightBT(elements, left, middle - 1);
+        root.right = constructMinHeightBT(elements, middle + 1,right);
+        return root;
+
+    }
+
 
     public static void main(String args[]) {
         BinarySearchTree bst = new BinarySearchTree();
@@ -122,11 +135,19 @@ public class BinarySearchTree<E extends Comparable> {
         bst.add(7);
         bst.add(8);
         System.out.println(bst.inOrdertraversal());
-
+        // created A BST 
+        System.out.println("height of BST with elements {1,2,3,4,5,6,7,8} = " + bst.height()); // print height of the BST 
+        System.out.println("check if the BST is valid = " + bst.validateBST(bst.rootNode));
+        BinarySearchTree bst3 = new BinarySearchTree(); 
         Integer [] arrays = {1,2,3,4,5,6,7,8};
-        bst.transformAsHeap(arrays);
-        System.out.println(bst.inOrdertraversal());
-        System.out.println(bst.validateBST(bst.rootNode));
+        bst3.rootNode = bst.transformAsHeap(arrays);
+        System.out.println("In order traversal after heapifying the tree = "+bst3.inOrdertraversal());
+        System.out.println("check if the BST is valid after heapify = " + bst3.validateBST(bst3.rootNode));
+        BinarySearchTree bst2 = new BinarySearchTree();
+        bst2.rootNode = bst.constructMinHeightBT(arrays, 0, arrays.length - 1);
+        System.out.println("height of the BST {1,2,3,4,5,6,7,8} with min height routine " + bst2.height());
+        
+        
 
     }
 }
